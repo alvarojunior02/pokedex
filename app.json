@@ -1,10 +1,21 @@
 {
   "expo": {
-    "name": "pokedex",
-    "slug": "pokedex",
+    "name": "Pokedex",
+    "slug": "Pokedex",
+    "privacy": "public",
+    "platforms": [
+      "android"
+    ],
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#DA1E2D"
+    },
+    "android": {
+      "package": "com.alvarojunior.pokedex",
+      "versionCode": 1
+    }
   }
 }

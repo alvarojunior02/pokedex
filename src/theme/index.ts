@@ -1,7 +1,8 @@
 export default {
   COLORS: {
-      BACKGROUND: '#FFF',
-      TEXT: '#000',
+      BACKGROUND: '#EEE',
+      WHITE: '#FFF',
+      BLACK: '#000',
       
       GREEN_400: '#34A444',
       GREEN_800: '#0C3C12',
@@ -14,7 +15,7 @@ export default {
 
       YELLOW_400: '#FFDE00',
 
-      GOLD: '#B3A125'
+      PURPLE_400: '#A43E9E'
   },
 
   FONTS: {

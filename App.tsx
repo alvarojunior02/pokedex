@@ -16,6 +16,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './src/screens/Home';
+import Pokemons from './src/screens/Pokemons';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,24 +33,28 @@ export default function App() {
 
   return (
     <>
-    <ThemeProvider theme={THEME}>
-      <StatusBar 
-        style='light' 
-        backgroundColor={THEME.COLORS.RED_600}
-      />
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen 
-            name="Home" 
-            component={Home}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+      <ThemeProvider theme={THEME}>
+        <StatusBar 
+          style='light' 
+          backgroundColor={THEME.COLORS.RED_400}
+        />
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <Stack.Screen 
+              name="Home" 
+              component={Home}
+            />
+            <Stack.Screen 
+              name="Pokemons" 
+              component={Pokemons}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     </>    
   );
 }

@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   margin-top: 20px;
+  margin-bottom: 20px;
 
   align-self: center;
 
@@ -10,7 +11,7 @@ export const Container = styled.View`
   align-items: center;
   padding: 10px;
 
-  width: 200px;
+  width: 160px;
   height: 200px;
 
   border: 2px solid black;

@@ -12,7 +12,6 @@ import {
   ContainerCards,
   Loader
 } from './styles';
-import { ActivityIndicator } from 'react-native';
 
 type PokemonsType = {
   name: string,
@@ -70,7 +69,11 @@ const Pokemons = ({navigation}: any) => {
           {
             pokemons?.map((pokemon) => {
               return (
-                <CardPokemon key={pokemon.name} url={pokemon.url} />
+                <CardPokemon 
+                  key={pokemon.name} 
+                  url={pokemon.url} 
+                  navigation={navigation}
+                />
               );
             })
           }

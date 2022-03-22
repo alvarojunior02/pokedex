@@ -4,15 +4,10 @@ import { ActivityIndicator } from 'react-native';
 
 interface IProps {
   url: string;
+  navigation: any;
 }
 
-type Pokemon = {
-  id: number,
-  name: string,
-  sprites: {
-    front_default: string
-  }
-}
+import types from '../../config/typesOfPokemons';
 
 import {
   Container,
@@ -21,14 +16,47 @@ import {
   TextName,
 } from './styles';
 
-const CardPokemon = ({url}: IProps) => {
+type Pokemon = {
+  id: number,
+  name: string,
+  sprites: {
+    front_default: string,
+    other: any
+  },
+  types: [
+    {
+      type: {
+        name: string,
+        url: string
+      }
+    }
+  ],
+  image: string
+}
+
+const CardPokemon = ({url, navigation}: IProps) => {
   const [pokemon, setPokemon] = useState<Pokemon>();
 
-  const getPokemon = () => {
-    axios.get(url)
+  const getPokemon = async () => {
+    await axios.get(url)
       .then(response => {
         setPokemon(response.data);
+      });
+  }
+
+  const defineBackgroundColor = () => { 
+    let type = "t";   
+    let color = "white";
+    
+    types.map(item => {
+      pokemon?.types.map(poke => {
+        if(item.type === poke.type.name) {
+          color = item.color;
+        }
       })
+    })
+
+    return color
   }
 
   useEffect(() => {
@@ -37,9 +65,16 @@ const CardPokemon = ({url}: IProps) => {
 
   return (
     <>
-      <Container>
+      <Container
+        style={{ backgroundColor: defineBackgroundColor()}}
+        onPress={() => {
+          navigation.navigate("PokemonDetail", {
+            pokemon: pokemon
+          });
+        }}
+      >
         <TextID>#{pokemon?.id}</TextID>
-        <Image source={{ uri: pokemon?.sprites.front_default }}/>
+        <Image source={{ uri: pokemon?.sprites.other["official-artwork"].front_default || pokemon?.sprites.front_default }}/>
         <TextName>{pokemon?.name}</TextName>
       </Container>
     </>

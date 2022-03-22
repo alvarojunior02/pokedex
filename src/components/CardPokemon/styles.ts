@@ -16,7 +16,6 @@ export const Container = styled.TouchableOpacity`
 
   border: 2px solid black;
   border-radius: 20px;
-  background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
 export const TextID = styled.Text`

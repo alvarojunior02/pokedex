@@ -17,6 +17,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from './src/screens/Home';
 import Pokemons from './src/screens/Pokemons';
+import PokemonDetail from './src/screens/PokemonDetail';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,10 @@ export default function App() {
             <Stack.Screen 
               name="Pokemons" 
               component={Pokemons}
+            />
+            <Stack.Screen 
+              name="PokemonDetail" 
+              component={PokemonDetail}
             />
           </Stack.Navigator>
         </NavigationContainer>

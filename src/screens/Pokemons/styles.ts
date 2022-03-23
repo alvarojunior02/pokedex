@@ -40,6 +40,29 @@ export const ContainerCards = styled.ScrollView`
 
 export const Loader = styled.ActivityIndicator`
   position: absolute;
-  bottom: 0;
+  top: 45%;
   left: 45%;
+`;
+
+export const ButtonLoadMore = styled.TouchableOpacity`
+  background-color: ${({theme}) => theme.COLORS.RED_400};
+
+  width: 160px;
+  height: 60px;
+
+  border-radius: 20px;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 20px;
+`;
+
+export const TextLoadMore = styled.Text`
+  align-self: center;
+
+  color: white;
+
+  font-size: 20px;
+  font-family: ${({ theme }) => theme.FONTS.BOLD};
 `;

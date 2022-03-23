@@ -10,7 +10,9 @@ import {
   BackIcon,
   Title,
   ContainerCards,
-  Loader
+  Loader,
+  ButtonLoadMore,
+  TextLoadMore
 } from './styles';
 
 type PokemonsType = {
@@ -56,29 +58,38 @@ const Pokemons = ({navigation}: any) => {
           <BackIcon source={iconArrow}/>
         </BackButton>
         <Title>Pokemons</Title>
-        <ContainerCards
-          contentContainerStyle={{ 
-            flexWrap: "wrap", 
-            flexDirection: "row",
-            justifyContent: "space-around"
-          }}
-          onMomentumScrollEnd={() => {
-            loadMorePokemons();
-          }}
-        >
-          {
-            pokemons?.map((pokemon) => {
-              return (
-                <CardPokemon 
-                  key={pokemon.name} 
-                  url={pokemon.url} 
-                  navigation={navigation}
-                />
-              );
-            })
-          }
-          <Loader size={"large"} color={"black"} />
-        </ContainerCards>
+        {
+          !pokemons 
+            ?
+              <Loader size={"large"} color={"black"}/>
+            : 
+            <ContainerCards
+              contentContainerStyle={{ 
+                flexWrap: "wrap", 
+                flexDirection: "row",
+                justifyContent: "space-around"
+              }}
+            >
+              {
+                pokemons?.map((pokemon) => {
+                  return (
+                    <CardPokemon 
+                      key={pokemon.name} 
+                      url={pokemon.url} 
+                      navigation={navigation}
+                    />
+                  );
+                })
+              }
+              <ButtonLoadMore
+                onPress={() => {
+                  loadMorePokemons();
+                }}
+              >
+                <TextLoadMore>Load More</TextLoadMore>
+              </ButtonLoadMore>
+            </ContainerCards>
+        }
       </Container>
     </>
   );

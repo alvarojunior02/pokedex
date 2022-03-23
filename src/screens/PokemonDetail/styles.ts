@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-
   justify-content: flex-start;
   align-items: center;
 `;
@@ -49,17 +48,23 @@ export const ContainerImages = styled.View`
   justify-content: center;
   align-items: center;
 
-  border-radius: 200px;
-  width: 80%;
+  width: 100%;
 `;
 
 export const SpritePokemonImage = styled.Image`
   width: 250px;
   height: 250px;
 
-  border-radius: 20px;
+  margin: 25px 0;
+`;
 
-  margin: 20px;
+export const Content = styled.View`
+  flex: 1;
+  width: 100%;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+
+  background-color: ${({theme}) => theme.COLORS.WHITE};
 `;
 
 export const Description = styled.Text`
@@ -69,8 +74,7 @@ export const Description = styled.Text`
 export const TextInfos = styled.Text`
   margin: 20px 0;
 
-  align-self: flex-start;
-  margin-left: 40px;
+  align-self: center;
 
   font-size: 26px;
   font-family: ${({ theme }) => theme.FONTS.MEDIUM};
@@ -88,5 +92,5 @@ export const GerericInfo = styled.Text`
   margin-top: 10px;
 
   font-size: 20px;
-  font-family: ${({ theme }) => theme.FONTS.REGULAR};
+  font-family: ${({ theme }) => theme.FONTS.MEDIUM};
 `;

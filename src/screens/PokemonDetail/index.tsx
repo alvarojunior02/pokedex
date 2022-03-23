@@ -11,7 +11,8 @@ import {
   Header,
   ContainerInfos,
   TextInfos,
-  GerericInfo
+  GerericInfo,
+  Content
 } from './styles';
 
 import iconArrow from '../../assets/icons/arrow.png';
@@ -22,6 +23,7 @@ type Pokemon = {
     id: number,
     name: string,
     description: string,
+    height: number,
     weight: number,
     sprites: {
       front_default: string,
@@ -39,6 +41,7 @@ type Pokemon = {
 }
 
 import types from '../../config/typesOfPokemons';
+import { FirstLetterToUpperCase } from '../../utils/FirstLetterToUpperCase';
 
 const PokemonDetail = ({ route, navigation }: any) => {
   const { pokemon }: Pokemon = route.params;
@@ -59,7 +62,9 @@ const PokemonDetail = ({ route, navigation }: any) => {
 
   return (
     <>
-      <Container>
+      <Container
+        style={{ backgroundColor: defineBackgroundColor()}}
+      >
         <Header>
           <BackButton
             onPress={() => {
@@ -71,16 +76,17 @@ const PokemonDetail = ({ route, navigation }: any) => {
 
           <Title>Detail</Title>
         </Header>
-        <ContainerImages
-          style={{ backgroundColor: defineBackgroundColor()}}
-        > 
+        <ContainerImages>
           <SpritePokemonImage source={{ uri: pokemon.sprites.other["official-artwork"].front_default || pokemon.sprites.front_default }}/>
         </ContainerImages>
-        <TextInfos>Infomations</TextInfos>
-        <ContainerInfos>
-            <GerericInfo>Name: {pokemon.name}</GerericInfo>
-            <GerericInfo>Weight: {pokemon.weight}</GerericInfo>
-        </ContainerInfos>
+        <Content>
+          <TextInfos>Infomations</TextInfos>
+          <ContainerInfos>
+              <GerericInfo>Name: {FirstLetterToUpperCase(pokemon.name)}</GerericInfo>
+              <GerericInfo>Height: {pokemon.height}</GerericInfo>
+              <GerericInfo>Weight: {pokemon.weight}</GerericInfo>
+          </ContainerInfos>
+        </Content>
       </Container>
     </>
   );

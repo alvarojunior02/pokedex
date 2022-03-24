@@ -69,8 +69,6 @@ const CardPokemon = ({url, navigation}: IProps) => {
       })
     }
     
-    
-
     return color
   }
 

@@ -31,10 +31,15 @@ export const Title = styled.Text`
   align-self: center;
 
   font-size: 32px;
+  color: black;
   font-family: ${({ theme }) => theme.FONTS.BOLD};
 `;
 
 export const ContainerCards = styled.ScrollView`
+  flex: 1;
+  padding-top: 20px;
+  margin-bottom: 90px;
+
   background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
@@ -42,6 +47,19 @@ export const Loader = styled.ActivityIndicator`
   position: absolute;
   top: 45%;
   left: 45%;
+`;
+
+export const ContainerButtons = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+
+  flex-direction: row;
+  align-items: center;
+
+  padding: 10px;
+
+  background-color: ${({ theme }) => theme.COLORS.WHITE};
 `;
 
 export const ButtonLoadMore = styled.TouchableOpacity`
@@ -54,8 +72,7 @@ export const ButtonLoadMore = styled.TouchableOpacity`
 
   justify-content: center;
   align-items: center;
-
-  margin-bottom: 20px;
+  margin: 0 10px;
 `;
 
 export const TextLoadMore = styled.Text`

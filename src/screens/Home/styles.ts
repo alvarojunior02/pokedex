@@ -10,7 +10,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  margin-top: 40px;
+  margin-top: 25px;
 
   font-size: 32px;
   font-family: ${({ theme }) => theme.FONTS.BOLD};
@@ -61,12 +61,31 @@ export const ContainerButtons = styled.View`
   align-items: center;
 `;
 
+export const Subtitle = styled.Text`
+  margin-top: 25px;
+
+  font-size: 32px;
+  font-family: ${({ theme }) => theme.FONTS.BOLD};
+`;
+
 export const TextButton = styled.Text`
   font-size: 22px;
   font-family: ${({ theme }) => theme.FONTS.MEDIUM};
   color: white;
 
+  align-self: center;
+
   text-shadow: 1px 1px 1px black;
+`;
+
+export const Pokedex = styled.TouchableOpacity`
+  width: 100%;
+  height: 450px;
+
+  justify-content: center;
+  align-items: center;
+
+  margin-bottom: 10px;
 `;
 
 export const ButtonPokemons = styled.TouchableOpacity`

@@ -26,7 +26,7 @@ export const TextID = styled.Text`
 
   font-size: 20px;
   color: black;
-  font-family: ${({ theme }) => theme.FONTS.BOLD};
+  font-family: ${({ theme }) => theme.FONTS.REGULAR};
 `;
 
 export const Image = styled.Image`
@@ -42,15 +42,16 @@ export const TextName = styled.Text`
   align-self: flex-start;
 
   font-size: 22px;
-  color: black;
-  font-family: ${({ theme }) => theme.FONTS.MEDIUM};
+  color: white;
+  font-weight: bold;
+  font-family: ${({ theme }) => theme.FONTS.BOLD};
 `;
 
 export const ContainerTypes = styled.View`
   margin-top: 5px;
 
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 `;
 
@@ -61,13 +62,11 @@ export const TypeContent = styled.View`
 
   padding: 0 6px;
   margin: 0 4px;
-  border-radius: 10px;
+  border-radius: 5px;
 `;
 
 export const TextTypeContent = styled.Text`
-  align-self: center;
-
   font-size: 18px;
-  color: black;
-  font-family: ${({ theme }) => theme.FONTS.REGULAR};
+  color: white;
+  font-family: ${({ theme }) => theme.FONTS.BOLD};
 `;

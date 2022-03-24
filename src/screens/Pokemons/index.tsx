@@ -12,7 +12,8 @@ import {
   ContainerCards,
   Loader,
   ButtonLoadMore,
-  TextLoadMore
+  TextLoadMore,
+  ContainerButtons
 } from './styles';
 
 type PokemonsType = {
@@ -22,6 +23,7 @@ type PokemonsType = {
 
 const Pokemons = ({navigation}: any) => {
   const [pokemons, setPokemons] = useState<PokemonsType[]>();
+  const [prev, setPrev] = useState("");
   const [next, setNext] = useState("");
   const [cont, setCont] = useState(1);
 
@@ -30,16 +32,29 @@ const Pokemons = ({navigation}: any) => {
       .then(response => {
         setPokemons(response.data.results);
         setNext(`/pokemon?offset=${20*cont}&limit=20`);
+        if(cont > 1) {
+          setPrev(`/pokemon?offset=${20*(cont-2)}&limit=20`);
+        }
+      })
+  }
+
+  const nextPokemons = async () => {
+    await api.get(next)
+      .then(response => {
+        setPokemons(response.data.results);
+        setPrev(`/pokemon?offset=${20*(cont-1)}&limit=20`);
+        setNext(`/pokemon?offset=${20*cont}&limit=20`);
         setCont(cont + 1);
       })
   }
 
-  const loadMorePokemons = async () => {
-    await api.get(next)
+  const prevPokemons = async () => {
+    await api.get(prev)
       .then(response => {
-        setPokemons(pokemons?.concat(response.data.results));
-        setNext(`/pokemon?offset=${20*cont}&limit=20`);
-        setCont(cont + 1);
+        setPokemons(response.data.results);
+        setPrev(`/pokemon?offset=${20*(cont-4)}&limit=20`);
+        setNext(`/pokemon?offset=${20*(cont-2)}&limit=20`);
+        setCont(cont - 1);
       })
   }
 
@@ -81,15 +96,26 @@ const Pokemons = ({navigation}: any) => {
                   );
                 })
               }
-              <ButtonLoadMore
-                onPress={() => {
-                  loadMorePokemons();
-                }}
-              >
-                <TextLoadMore>Load More</TextLoadMore>
-              </ButtonLoadMore>
             </ContainerCards>
         }
+        <ContainerButtons>
+          <ButtonLoadMore
+            onPress={() => {
+              prevPokemons();
+            }}
+            disabled={cont === 1 ? true : false || pokemons?.length === 0 ? true : false}
+          >
+            <TextLoadMore>{"<<<"}</TextLoadMore>
+          </ButtonLoadMore>
+          <ButtonLoadMore
+            onPress={() => {
+              nextPokemons();
+            }}
+            disabled={pokemons?.length === 0 ? true : false}
+          >
+            <TextLoadMore>{">>>"}</TextLoadMore>
+          </ButtonLoadMore>
+        </ContainerButtons>
       </Container>
     </>
   );

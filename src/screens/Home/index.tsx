@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 
 import iconSearch from '../../assets/icons/search.png';
+import pokedexBackground from '../../../assets/splash.png'
 
 import {
   Container,
@@ -16,11 +17,28 @@ import {
   ButtonTypes,
   ButtonAbilities,
   ButtonMoves,
-  ButtonLocations
+  ButtonLocations,
+  Pokedex,
+  Subtitle
 } from './styles';
+import { ImageBackground } from 'react-native';
 
 const Home = ({ navigation }: any) => {
   const [search, setSearch] = useState("");
+
+  const searchPokemon = async () => {
+    await api.get(`/pokemon/${search.trim().toLowerCase()}`)
+      .then(response => {
+        if(response.status === 200) {
+          setSearch("");
+          navigation.navigate('PokemonDetail', {
+            pokemon: response.data
+          });
+        } else {
+
+        }
+      })
+  }
 
   return (
     <>
@@ -31,35 +49,34 @@ const Home = ({ navigation }: any) => {
           <SearchBar 
             value={search}
             onChangeText={newSearch => setSearch(newSearch)}
-            placeholder={"Example: charmander"}
+            placeholder={"Example: Charmander"}
           />
-          <ButtonSearch>
+          <ButtonSearch
+            onPress={() => {
+              searchPokemon();
+            }}
+          >
             <IconSearch source={iconSearch}/>
           </ButtonSearch>
         </SearchContainer>
-
-        <Title>Navigate to:</Title>
-
+        <Subtitle>Open Pokedex List:</Subtitle>
         <ContainerButtons>
-          <ButtonPokemons
+          <Pokedex
             onPress={() => {
               navigation.navigate('Pokemons');
             }}
           >
-            <TextButton>Pokemons</TextButton>
-          </ButtonPokemons>
-          <ButtonTypes>
-            <TextButton>Types</TextButton>
-          </ButtonTypes>
-          <ButtonAbilities>
-            <TextButton>Abilities</TextButton>
-          </ButtonAbilities>
-          <ButtonMoves>
-            <TextButton>Moves</TextButton>
-          </ButtonMoves>
-          <ButtonLocations>
-            <TextButton>Locations</TextButton>
-          </ButtonLocations>
+            <ImageBackground 
+              source={pokedexBackground}
+              resizeMode={"contain"}
+              style={{
+                width: "100%",
+                height: "100%",
+                justifyContent: "center"
+              }}
+              borderRadius={20}
+            />
+          </Pokedex>
         </ContainerButtons>
       </Container>
     </>

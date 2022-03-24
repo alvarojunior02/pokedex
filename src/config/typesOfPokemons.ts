@@ -60,7 +60,7 @@ const types = [
     color: "#75574c",
   },
   {
-    type: "eletric",
+    type: "electric",
     color: "#f9cf30",
   },
   {

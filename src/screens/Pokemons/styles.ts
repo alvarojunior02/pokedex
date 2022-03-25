@@ -52,7 +52,8 @@ export const Loader = styled.ActivityIndicator`
 export const ContainerButtons = styled.View`
   position: absolute;
   bottom: 0;
-  left: 5px;
+  
+  align-self: center;
 
   flex-direction: row;
   align-items: center;

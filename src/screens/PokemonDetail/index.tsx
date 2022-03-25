@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import React from 'react';
 
 import { 
   Container,
@@ -25,14 +24,17 @@ import {
   TypeName,
   ContainerInfoText,
   GenericLabel,
-  PokemonName
+  PokemonName,
+  ContainerEvolution,
+  IconEvolution,
+  ContainerLevelToEvolve,
+  TextLevel
 } from './styles';
 
 import iconArrow from '../../assets/icons/arrow.png';
-import pokeballBack from '../../assets/pokeball.svg';
-import { ActivityIndicator, ImageBackground } from 'react-native';
+import iconArrowright from '../../assets/icons/arrowright.png';
 
-type Pokemon = {
+interface Params {
   pokemon: {
     id: number,
     name: string,
@@ -63,7 +65,9 @@ type Pokemon = {
       name: string,
       url: string
     }
-  }
+  },
+  specie: SpecieType
+  evolutionChain: EvolutionType
 }
 
 type SpecieType = {
@@ -81,16 +85,54 @@ type SpecieType = {
     name: string;
     url: string;
   },
+  evolution_chain: {
+    url: string;
+  }
+}
+
+type EvolutionType = {
+  chain: {
+    evolves_to: [
+      {
+        evolution_details: [
+          {
+            min_level: number,
+          }
+        ],
+        evolves_to: [
+          {
+            evolution_details: [
+              {
+                min_level: number,
+              }
+            ],
+            species: {
+              name: string,
+              url: string
+            }
+          }
+        ],
+        species: {
+          name: string,
+          url: string
+        }
+      }
+    ],
+    species: {
+      name: string,
+      url: string
+    }
+  }
 }
 
 import types from '../../config/typesOfPokemons';
 import { FirstLetterToUpperCase } from '../../utils/FirstLetterToUpperCase';
 import StatBar from '../../components/StatBar';
-import axios from 'axios';
+import EvolutionPokemon from '../../components/EvolutionPokemon';
 
 const PokemonDetail = ({ route, navigation }: any) => {
-  const { pokemon }: Pokemon = route.params;
-  const [specie, setSpecie] = useState<SpecieType>();
+  const { pokemon, specie, evolutionChain }: Params = route.params;
+  console.log(evolutionChain);
 
   const defineBackgroundColor = (type?: string) => { 
     let color = "white";
@@ -103,7 +145,7 @@ const PokemonDetail = ({ route, navigation }: any) => {
       })
     } else {
       types.map(item => {
-        pokemon?.types.map(poke => {
+        pokemon.types.map(poke => {
           if(item.type === poke.type.name) {
             color = item.color;
           }
@@ -113,17 +155,6 @@ const PokemonDetail = ({ route, navigation }: any) => {
     
     return color
   }
-
-  const getSpecie = () => {
-    axios.get(pokemon.species.url)
-      .then(response => {
-        setSpecie(response.data);
-      })
-  }
-
-  useEffect(() => {
-    getSpecie();
-  }, []);
 
   return (
     <>
@@ -159,11 +190,15 @@ const PokemonDetail = ({ route, navigation }: any) => {
         </ContainerTypes>
 
         <ContainerImages>
-          <SpritePokemonImage source={{ 
-            uri: 
-              pokemon.sprites.other["official-artwork"].front_default || 
-              pokemon.sprites.front_default 
-          }}/>
+          <SpritePokemonImage 
+            source={
+              { 
+                uri: 
+                  pokemon.sprites.other["official-artwork"].front_default || 
+                  pokemon.sprites.front_default 
+              }
+            }
+          />
         </ContainerImages>
         
         <PokemonName>
@@ -173,7 +208,7 @@ const PokemonDetail = ({ route, navigation }: any) => {
         <Content>
           <Description>
             {
-              specie?.flavor_text_entries.map(item => {
+              specie.flavor_text_entries.map(item => {
                 if(item.version.name === "firered") {
                   return item.flavor_text;
                 }
@@ -181,7 +216,7 @@ const PokemonDetail = ({ route, navigation }: any) => {
             }
           </Description>
           <TextInfos
-            style={{ color: specie?.color.name}}
+            style={{ color: specie.color.name}}
           >
             Data
           </TextInfos>
@@ -197,23 +232,23 @@ const PokemonDetail = ({ route, navigation }: any) => {
           </ContainerInfos>
 
           <TextInfos
-            style={{ color: specie?.color.name}}
+            style={{ color: specie.color.name}}
           >
             Training
           </TextInfos>
           <ContainerInfos>
               <ContainerInfoText>
                 <GerericInfo>Catch Hate: </GerericInfo>
-                <GenericLabel>{specie?.capture_rate}</GenericLabel>
+                <GenericLabel>{specie.capture_rate}</GenericLabel>
               </ContainerInfoText>
               <ContainerInfoText>
                 <GerericInfo>Base Happiness: </GerericInfo>
-                <GenericLabel>{specie?.base_happiness}</GenericLabel>
+                <GenericLabel>{specie.base_happiness}</GenericLabel>
               </ContainerInfoText>
           </ContainerInfos>
 
           <TextInfos
-            style={{ color: specie?.color.name}}
+            style={{ color: specie.color.name}}
           >
             Base Stats
           </TextInfos>
@@ -244,6 +279,52 @@ const PokemonDetail = ({ route, navigation }: any) => {
               })
             }
           </ContainerInfos>
+
+          <TextInfos
+            style={{ color: specie.color.name}}
+          >
+            Evolutions
+          </TextInfos>
+          <ContainerInfos>
+            {
+              evolutionChain.chain.evolves_to.map((item, index) => {
+                return <>
+                  <ContainerEvolution>
+                    <EvolutionPokemon 
+                      pokemonName={evolutionChain.chain.species.name}
+                    />
+                    <ContainerLevelToEvolve>
+                      <IconEvolution source={iconArrowright}/>
+                    </ContainerLevelToEvolve>
+                    <EvolutionPokemon 
+                      pokemonName={item.species.name}
+                    />
+                  </ContainerEvolution>
+                  {
+                    item.evolves_to
+                      ? <> 
+                        {item.evolves_to.map((item2, index2) => {
+                          return <> 
+                            <ContainerEvolution>
+                              <EvolutionPokemon 
+                                pokemonName={item.species.name}
+                              />
+                              <ContainerLevelToEvolve>
+                                <IconEvolution source={iconArrowright}/>
+                              </ContainerLevelToEvolve>
+                              <EvolutionPokemon 
+                                pokemonName={item2.species.name}
+                              />
+                            </ContainerEvolution>
+                          </>
+                        })}
+                      </>
+                      : null
+                  }
+                </>
+              })
+            }
+          </ContainerInfos>
         </Content>
       </Container>
     </>
@@ -251,7 +332,3 @@ const PokemonDetail = ({ route, navigation }: any) => {
 }
 
 export default PokemonDetail;
-
-function defineBackgroundColor(): import("react-native").ColorValue | undefined {
-  throw new Error('Function not implemented.');
-}

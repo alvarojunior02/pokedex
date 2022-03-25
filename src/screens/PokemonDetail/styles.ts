@@ -65,6 +65,7 @@ export const TypeContent = styled.View`
 `;
 
 export const TypeName = styled.Text`
+  color: white;
   font-size: 15px;
   font-family: ${({ theme }) => theme.FONTS.MEDIUM};
 `;
@@ -79,8 +80,6 @@ export const ContainerImages = styled.View`
 export const SpritePokemonImage = styled.Image`
   width: 250px;
   height: 250px;
-
-  margin: 25px 0;
 `;
 
 export const PokemonName = styled.Text`
@@ -126,6 +125,8 @@ export const TextInfos = styled.Text`
 
 export const ContainerInfos = styled.View`
   flex: 1;
+
+  padding-bottom: 20px;
 
   width: 100%;
 `;
@@ -209,4 +210,32 @@ export const StatValue = styled.Text`
 
   font-size: 15px;
   font-family: ${({ theme }) => theme.FONTS.MEDIUM};
+`;
+
+export const ContainerEvolution = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  align-self: center;
+
+  margin: 10px 0;
+
+  width: 80%;
+`;
+
+export const ContainerLevelToEvolve = styled.View`
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const IconEvolution = styled.Image`
+  width: 40px;
+  height: 40px;
+`;
+
+export const TextLevel = styled.Text`
+  font-size: 15px;
+  font-family: ${({ theme }) => theme.FONTS.MEDIUM};  
 `;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 
 import iconSearch from '../../assets/icons/search.png';
-import pokedexBackground from '../../../assets/splash.png'
+import pokedexBackground from '../../../assets/icon.png'
 
 import {
   Container,
@@ -19,9 +19,14 @@ import {
   ButtonMoves,
   ButtonLocations,
   Pokedex,
-  Subtitle
+  Subtitle,
+  ImagePokedex
 } from './styles';
-import { ImageBackground } from 'react-native';
+import { Alert, ImageBackground } from 'react-native';
+
+import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import { PokemonImage } from '../../components/EvolutionPokemon/styles';
 
 const Home = ({ navigation }: any) => {
   const [search, setSearch] = useState("");
@@ -31,17 +36,48 @@ const Home = ({ navigation }: any) => {
       .then(response => {
         if(response.status === 200) {
           setSearch("");
-          navigation.navigate('PokemonDetail', {
-            pokemon: response.data
-          });
-        } else {
-
+          axios.get(response.data.species.url)
+            .then(responseSpecie => {
+              axios.get(responseSpecie.data.evolution_chain.url)
+                .then(responseEvo => {
+                  navigateToPokemonDetail({
+                    pokemon: response.data,
+                    specie: responseSpecie.data,
+                    evolutionChain: responseEvo.data
+                  })
+                })
+            })
         }
       })
+      .catch(error => {
+        setSearch("");
+        Alert.alert(
+          "Oops!",
+          "Pokémon not found, try other name.",
+          [
+            { text: "OK" }
+          ]
+        );
+      })
+  }
+
+  const navigateToPokemonDetail = (
+    {
+      pokemon, 
+      specie, 
+      evolutionChain
+    }: any
+  ) => {
+    navigation.navigate('PokemonDetail', {
+      pokemon,
+      specie,
+      evolutionChain
+    });
   }
 
   return (
     <>
+      <Toast />
       <Container>
         <Title>What Pokemon are you looking for?</Title>
 
@@ -66,15 +102,9 @@ const Home = ({ navigation }: any) => {
               navigation.navigate('Pokemons');
             }}
           >
-            <ImageBackground 
+            <ImagePokedex 
               source={pokedexBackground}
-              resizeMode={"contain"}
-              style={{
-                width: "100%",
-                height: "100%",
-                justifyContent: "center"
-              }}
-              borderRadius={20}
+              resizeMode={"cover"}
             />
           </Pokedex>
         </ContainerButtons>

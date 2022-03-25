@@ -15,6 +15,8 @@ import THEME from './src/theme';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Toast from 'react-native-toast-message';
+
 import Home from './src/screens/Home';
 import Pokemons from './src/screens/Pokemons';
 import PokemonDetail from './src/screens/PokemonDetail';
@@ -35,6 +37,7 @@ export default function App() {
   return (
     <>
       <ThemeProvider theme={THEME}>
+        <Toast />
         <StatusBar 
           style='light' 
           backgroundColor={THEME.COLORS.RED_400}

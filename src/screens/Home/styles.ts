@@ -10,7 +10,7 @@ export const Container = styled.View`
 `;
 
 export const Title = styled.Text`
-  margin-top: 25px;
+  margin-top: 35px;
 
   font-size: 32px;
   font-family: ${({ theme }) => theme.FONTS.BOLD};
@@ -47,8 +47,8 @@ export const ButtonSearch = styled.TouchableOpacity`
 `;
 
 export const IconSearch = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const ContainerButtons = styled.View`
@@ -79,13 +79,18 @@ export const TextButton = styled.Text`
 `;
 
 export const Pokedex = styled.TouchableOpacity`
-  width: 100%;
-  height: 450px;
+  width: 250px;
+  height: 250px;
 
   justify-content: center;
   align-items: center;
 
   margin-bottom: 10px;
+`;
+
+export const ImagePokedex = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
 `;
 
 export const ButtonPokemons = styled.TouchableOpacity`

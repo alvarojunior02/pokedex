@@ -120,6 +120,7 @@ export const TextInfos = styled.Text`
 
   font-size: 26px;
   font-weight: bold;
+  color: black;
   font-family: ${({ theme }) => theme.FONTS.BOLD};
 `;
 

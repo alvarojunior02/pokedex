@@ -27,8 +27,7 @@ import {
   PokemonName,
   ContainerEvolution,
   IconEvolution,
-  ContainerLevelToEvolve,
-  TextLevel
+  ContainerLevelToEvolve
 } from './styles';
 
 import iconArrow from '../../assets/icons/arrow.png';
@@ -132,8 +131,7 @@ import EvolutionPokemon from '../../components/EvolutionPokemon';
 
 const PokemonDetail = ({ route, navigation }: any) => {
   const { pokemon, specie, evolutionChain }: Params = route.params;
-  console.log(evolutionChain);
-
+  
   const defineBackgroundColor = (type?: string) => { 
     let color = "white";
 
@@ -202,21 +200,21 @@ const PokemonDetail = ({ route, navigation }: any) => {
         </ContainerImages>
         
         <PokemonName>
-          {FirstLetterToUpperCase(pokemon.name)}
+          {FirstLetterToUpperCase(pokemon.name)} (#{pokemon.id})
         </PokemonName>
 
         <Content>
-          <Description>
-            {
-              specie.flavor_text_entries.map(item => {
-                if(item.version.name === "firered") {
-                  return item.flavor_text;
-                }
-              })
-            }
-          </Description>
+          {
+            specie.flavor_text_entries.map(item => {
+              if(item.version.name === "firered") {
+                return <Description>
+                    {item.flavor_text}
+                  </Description>
+              }
+            })
+          }
           <TextInfos
-            style={{ color: specie.color.name}}
+            style={{ color: specie.color.name !== "white" ? specie.color.name : "black"}}
           >
             Data
           </TextInfos>
@@ -232,7 +230,7 @@ const PokemonDetail = ({ route, navigation }: any) => {
           </ContainerInfos>
 
           <TextInfos
-            style={{ color: specie.color.name}}
+            style={{ color: specie.color.name !== "white" ? specie.color.name : "black"}}
           >
             Training
           </TextInfos>
@@ -248,7 +246,7 @@ const PokemonDetail = ({ route, navigation }: any) => {
           </ContainerInfos>
 
           <TextInfos
-            style={{ color: specie.color.name}}
+            style={{ color: specie.color.name !== "white" ? specie.color.name : "black"}}
           >
             Base Stats
           </TextInfos>
@@ -280,51 +278,57 @@ const PokemonDetail = ({ route, navigation }: any) => {
             }
           </ContainerInfos>
 
-          <TextInfos
-            style={{ color: specie.color.name}}
-          >
-            Evolutions
-          </TextInfos>
-          <ContainerInfos>
-            {
-              evolutionChain.chain.evolves_to.map((item, index) => {
-                return <>
-                  <ContainerEvolution>
-                    <EvolutionPokemon 
-                      pokemonName={evolutionChain.chain.species.name}
-                    />
-                    <ContainerLevelToEvolve>
-                      <IconEvolution source={iconArrowright}/>
-                    </ContainerLevelToEvolve>
-                    <EvolutionPokemon 
-                      pokemonName={item.species.name}
-                    />
-                  </ContainerEvolution>
+          {
+            evolutionChain.chain.evolves_to 
+              ? <>
+                <TextInfos
+                  style={{ color: specie.color.name !== "white" ? specie.color.name : "black"}}
+                >
+                  Evolutions
+                </TextInfos>
+                <ContainerInfos>
                   {
-                    item.evolves_to
-                      ? <> 
-                        {item.evolves_to.map((item2, index2) => {
-                          return <> 
-                            <ContainerEvolution>
-                              <EvolutionPokemon 
-                                pokemonName={item.species.name}
-                              />
-                              <ContainerLevelToEvolve>
-                                <IconEvolution source={iconArrowright}/>
-                              </ContainerLevelToEvolve>
-                              <EvolutionPokemon 
-                                pokemonName={item2.species.name}
-                              />
-                            </ContainerEvolution>
-                          </>
-                        })}
+                    evolutionChain.chain.evolves_to.map((item, index) => {
+                      return <>
+                        <ContainerEvolution>
+                          <EvolutionPokemon 
+                            pokemonName={evolutionChain.chain.species.name}
+                          />
+                          <ContainerLevelToEvolve>
+                            <IconEvolution source={iconArrowright}/>
+                          </ContainerLevelToEvolve>
+                          <EvolutionPokemon 
+                            pokemonName={item.species.name}
+                          />
+                        </ContainerEvolution>
+                        {
+                          item.evolves_to
+                            ? <> 
+                              {item.evolves_to.map((item2, index2) => {
+                                return <> 
+                                  <ContainerEvolution>
+                                    <EvolutionPokemon 
+                                      pokemonName={item.species.name}
+                                    />
+                                    <ContainerLevelToEvolve>
+                                      <IconEvolution source={iconArrowright}/>
+                                    </ContainerLevelToEvolve>
+                                    <EvolutionPokemon 
+                                      pokemonName={item2.species.name}
+                                    />
+                                  </ContainerEvolution>
+                                </>
+                              })}
+                            </>
+                            : null
+                        }
                       </>
-                      : null
+                    })
                   }
-                </>
-              })
-            }
-          </ContainerInfos>
+                </ContainerInfos>
+              </>
+              : null
+          }
         </Content>
       </Container>
     </>

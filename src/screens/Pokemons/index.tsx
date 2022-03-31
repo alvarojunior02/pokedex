@@ -28,6 +28,7 @@ const Pokemons = ({navigation}: any) => {
   const [cont, setCont] = useState(1);
 
   const getPokemons = async () => {
+    setPokemons(undefined);
     await api.get("/pokemon")
       .then(response => {
         setPokemons(response.data.results);
@@ -39,6 +40,7 @@ const Pokemons = ({navigation}: any) => {
   }
 
   const nextPokemons = async () => {
+    setPokemons(undefined)
     await api.get(next)
       .then(response => {
         setPokemons(response.data.results);
@@ -49,6 +51,7 @@ const Pokemons = ({navigation}: any) => {
   }
 
   const prevPokemons = async () => {
+    setPokemons(undefined);
     await api.get(prev)
       .then(response => {
         setPokemons(response.data.results);
@@ -73,31 +76,25 @@ const Pokemons = ({navigation}: any) => {
           <BackIcon source={iconArrow}/>
         </BackButton>
         <Title>Pokemons</Title>
-        {
-          !pokemons 
-            ?
-              <Loader size={"large"} color={"black"}/>
-            : 
-            <ContainerCards
-              contentContainerStyle={{ 
-                flexWrap: "wrap", 
-                flexDirection: "row",
-                justifyContent: "space-around"
-              }}
-            >
-              {
-                pokemons?.map((pokemon) => {
-                  return (
-                    <CardPokemon 
-                      key={pokemon.name} 
-                      url={pokemon.url} 
-                      navigation={navigation}
-                    />
-                  );
-                })
-              }
-            </ContainerCards>
-        }
+          <ContainerCards
+            contentContainerStyle={{ 
+              flexWrap: "wrap", 
+              flexDirection: "row",
+              justifyContent: "space-around"
+            }}
+          >
+            {
+              pokemons?.map((pokemon) => {
+                return (
+                  <CardPokemon 
+                    key={pokemon.name} 
+                    url={pokemon.url} 
+                    navigation={navigation}
+                  />
+                );
+              })
+            }
+          </ContainerCards>
         <ContainerButtons>
           <ButtonLoadMore
             onPress={() => {

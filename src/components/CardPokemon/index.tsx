@@ -151,36 +151,45 @@ const CardPokemon = ({url, navigation}: IProps) => {
 
   return (
     <>
-      <Container
-        style={{  backgroundColor: defineBackgroundColor() }}
-        onPress={() => {
-          navigation.navigate("PokemonDetail", {
-            pokemon,
-            specie,
-            evolutionChain,
-          });
-        }}
-        disabled={
-          pokemon && specie && evolutionChain 
-            ? false
-            : true
-        }
-      >
-        <Image source={{ uri: pokemon?.sprites.other["official-artwork"].front_default || pokemon?.sprites.front_default }}/>
-        <TextID>#{pokemon?.id}</TextID>
-        <TextName>{FirstLetterToUpperCase(pokemon?.name || "...")}</TextName>
-        <ContainerTypes>
-          {
-            pokemon?.types.map(item => {
-                  return <TypeContent
-                      style={{  backgroundColor: defineBackgroundColor(item.type.name) }}
-                    >
-                      <TextTypeContent>{FirstLetterToUpperCase(item.type.name)}</TextTypeContent>
-                    </TypeContent>
-            })
-          }
-        </ContainerTypes>
-      </Container>
+      {
+        !pokemon 
+          ?
+            <Container
+              style={{ backgroundColor: "gray" }}
+            >
+
+            </Container>
+          : <Container
+            style={{  backgroundColor: defineBackgroundColor() }}
+            onPress={() => {
+              navigation.navigate("PokemonDetail", {
+                pokemon,
+                specie,
+                evolutionChain,
+              });
+            }}
+            disabled={
+              pokemon && specie && evolutionChain 
+                ? false
+                : true
+            }
+          >
+            <Image source={{ uri: pokemon?.sprites.other["official-artwork"].front_default || pokemon?.sprites.front_default }}/>
+            <TextID>#{pokemon?.id}</TextID>
+            <TextName>{FirstLetterToUpperCase(pokemon?.name || "...")}</TextName>
+            <ContainerTypes>
+              {
+                pokemon?.types.map(item => {
+                      return <TypeContent
+                          style={{  backgroundColor: defineBackgroundColor(item.type.name) }}
+                        >
+                          <TextTypeContent>{FirstLetterToUpperCase(item.type.name)}</TextTypeContent>
+                        </TypeContent>
+                })
+              }
+            </ContainerTypes>
+          </Container>
+      }
     </>
   );
 }

@@ -9,7 +9,3 @@ Pokedex for mobile devices
 - TypeScript
 - Styled-Components
 - Axios
-
-# Status
-
-In development
